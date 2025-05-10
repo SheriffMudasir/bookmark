@@ -10,7 +10,7 @@ import job from "./lib/cron.js";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-job.start();
+// job.start();
 
 app.use(express.json());
 app.use(cors());
