@@ -4,7 +4,7 @@ const router = express.Router();
 import jwt from "jsonwebtoken"
 
 const genToken = (userId) => {
-    return jwt.sign({ userId }, process.env.JWT_SECRETE, { expiresIn: "15d" });
+    return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "15d" });
 }
 
 router.post("/register", async (req, res) => {
@@ -76,19 +76,18 @@ router.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
 
+        // Sanitize input
         if (!email || !password) {
             return res.status(400).json({ message: "All fields are required" });
         }
 
         const user = await User.findOne({ email });
-
         if (!user) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
 
-        const isPassWordCorrect = await user.comparePassword(password);
-
-        if (!isPassWordCorrect) {
+        const isPasswordCorrect = await user.comparePassword(password);
+        if (!isPasswordCorrect) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
 
@@ -105,7 +104,7 @@ router.post("/login", async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Error in login route:", error);
+        console.error("Error in login route:", error.message);
         res.status(500).json({ message: "Internal server error" });
     }
 });
