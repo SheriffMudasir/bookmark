@@ -1,4 +1,4 @@
-import mongoose  from 'mongoose';
+import mongoose from 'mongoose';
 
 const bookSchema = new mongoose.Schema(
     {
@@ -8,11 +8,15 @@ const bookSchema = new mongoose.Schema(
         },
         caption: {
             type: String,
-            required:true,
+            required: true,
         },
         image: {
             type: String,
             required: true,
+        },
+        publicId: {
+            type: String,
+            required: true, // Since you're uploading all images to Cloudinary
         },
         rating: {
             type: Number,
@@ -25,8 +29,8 @@ const bookSchema = new mongoose.Schema(
             ref: 'User',
             required: true,
         },
-    }, 
-    {timestamps: true}
+    },
+    { timestamps: true }
 );
 
 const Book = mongoose.model('Book', bookSchema);
