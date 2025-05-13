@@ -7,6 +7,13 @@ const genToken = (userId) => {
     return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "15d" });
 }
 
+
+
+router.get("/test", (req, res) => {
+    res.json({ message: "Test route working" });
+});
+
+
 router.post("/register", async (req, res) => {
     try {
 

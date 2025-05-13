@@ -10,6 +10,7 @@ router.post("/", protectRoute, async (req, res) => {
     try {
         const { title, caption, rating, image } = req.body;
 
+
         // Validate required fields
         if (!image || !title || !caption || rating === undefined) {
             return res.status(400).json({ message: "All fields are required" });
